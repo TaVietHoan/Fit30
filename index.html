@@ -1,219 +1,1596 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d1311">
-<title>Fit30 — 30 Minutes to a Better You</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#0d1311; --bg2:#121a17; --surface:#18221e; --surface2:#1f2b26; --line:#2a3832;
-  --text:#f1f5ee; --muted:#8e9b94; --lime:#c8f53a; --lime-d:#9fcb1c; --lime-ink:#14200a;
-  --warn:#ffb454; --bad:#ff6b5e; --ok:#5fe3a1;
-  --r-lg:26px; --r-md:16px; --r-sm:10px;
-  --display:'Barlow Condensed','Arial Narrow',sans-serif;
-  --body:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  --safe-b:env(safe-area-inset-bottom,0px); --safe-t:env(safe-area-inset-top,0px);
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-padding-top:var(--safe-t)}
-body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.55 var(--body);padding-top:var(--safe-t);min-height:100vh}
-button,input,select,textarea{font:inherit;color:inherit}
-h1,h2,h3{margin:0;font-family:var(--display);font-weight:700;line-height:1.05;letter-spacing:.2px}
-p{margin:0}
-svg.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
-:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
-[hidden]{display:none!important}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Fit30 — 30 Minutes to a Better You. Ứng dụng tập luyện tại nhà 30 phút mỗi ngày, theo dõi vóc dáng và phân tích calo món ăn bằng AI.">
+  <meta name="theme-color" content="#0B0F19">
+  <title>Fit30 — 30 Minutes to a Better You</title>
+  
+  <style>
+    /* ==================== RESET & CSS VARIABLES ==================== */
+    :root {
+      --bg-main: #0B0F19;
+      --bg-surface: #111827;
+      --bg-card: #182234;
+      --bg-card-hover: #1F2E45;
+      --border-subtle: #243247;
+      --border-focus: #10B981;
+      
+      --accent-neon: #10B981;
+      --accent-neon-bright: #34D399;
+      --accent-neon-glow: rgba(16, 185, 129, 0.25);
+      --accent-energy: #F59E0B;
+      --accent-danger: #EF4444;
+      --accent-blue: #3B82F6;
+      
+      --text-primary: #F9FAFB;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      --shadow-neon: 0 0 25px rgba(16, 185, 129, 0.35);
+      
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
 
-/* layout */
-.app{display:grid;grid-template-columns:1fr;min-height:100vh}
-.side{display:none}
-main{padding:18px 16px calc(96px + var(--safe-b));max-width:760px;width:100%;margin:0 auto}
-.nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(13,19,17,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 6px calc(6px + var(--safe-b));z-index:20}
-.nav button,.side button.nv{background:none;border:0;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;font-size:11.5px;border-radius:12px;cursor:pointer;transition:color .15s,background .15s}
-.nav button[aria-current=page]{color:var(--lime)}
-.nav button[aria-current=page] svg{filter:drop-shadow(0 0 6px rgba(200,245,58,.5))}
-@media(min-width:900px){
-  .app{grid-template-columns:250px 1fr}
-  .side{display:flex;flex-direction:column;gap:6px;padding:28px 18px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;background:var(--bg2)}
-  .brand{font:800 38px/1 var(--display);margin-bottom:22px}.brand b{color:var(--lime)}
-  .side button.nv{flex-direction:row;gap:12px;font-size:15px;padding:12px 14px;justify-content:flex-start}
-  .side button.nv[aria-current=page]{background:var(--surface);color:var(--lime)}
-  .side button.nv:hover{background:var(--surface)}
-  .nav{display:none}
-  main{padding:34px 36px 60px;max-width:900px}
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-/* primitives */
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
-.card + .card,.stack > * + *{margin-top:14px}
-.row{display:flex;align-items:center;gap:12px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}
-.muted{color:var(--muted)}.sm{font-size:13px}.lime{color:var(--lime)}
-.pagehead{margin-bottom:18px}.pagehead h2{font-size:34px}.pagehead p{color:var(--muted);margin-top:4px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface2);color:var(--text);padding:12px 18px;border-radius:14px;cursor:pointer;font-weight:500;min-height:46px;transition:transform .12s,background .15s,border-color .15s}
-.btn:hover{border-color:#3b4d45}.btn:active{transform:scale(.97)}
-.btn.primary{background:var(--lime);color:var(--lime-ink);border-color:var(--lime);font-weight:600}
-.btn.primary:hover{background:#d6ff4f}
-.btn.ghost{background:transparent}.btn.danger{color:var(--bad);border-color:rgba(255,107,94,.35)}
-.btn.big{min-height:60px;font:700 24px var(--display);letter-spacing:.8px;border-radius:18px;width:100%}
-.btn[disabled]{opacity:.5;cursor:not-allowed}
-.icon-btn{width:46px;height:46px;padding:0}
-.chip{display:inline-block;padding:3px 10px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);font-size:12px;color:var(--muted)}
-.chip.on{background:rgba(200,245,58,.12);border-color:rgba(200,245,58,.4);color:var(--lime)}
-label.f{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-input,select,textarea{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:46px}
-input:focus,select:focus,textarea:focus{border-color:var(--lime);outline:none}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.num{font-family:var(--display);font-weight:700;font-variant-numeric:tabular-nums}
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      padding-bottom: 90px; /* Dành chỗ cho bottom nav mobile */
+    }
 
-/* dashboard */
-.hero{position:relative;overflow:hidden;border-radius:var(--r-lg);padding:22px 20px;background:linear-gradient(135deg,#1b2a14 0%,#18221e 55%);border:1px solid #33462a}
-.hero h1{font-size:44px}.hero .date{color:var(--muted);font-size:13px;margin-bottom:6px}
-.hero .msg{margin-top:10px;color:#cdd8c8;max-width:34ch}
-.week{display:flex;gap:6px;margin-top:16px}
-.week i{flex:1;height:8px;border-radius:5px;background:#2b3a2e}.week i.on{background:var(--lime)}
-.stat{padding:14px 14px 12px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line)}
-.stat .k{font-size:12.5px;color:var(--muted)}
-.stat .v{font:700 34px/1.1 var(--display);margin-top:4px}
-.stat .v small{font-size:15px;color:var(--muted);font-weight:500;margin-left:3px}
-.stat .d{font-size:12.5px;margin-top:2px;color:var(--muted)}
-.today{border-color:#3a5028;background:linear-gradient(160deg,#1d2c17,#18221e 60%)}
-.today h2{font-size:38px;margin:6px 0 4px}
-.exlist{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
-.exlist li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.2);cursor:pointer}
-.exlist li:hover{background:rgba(0,0,0,.32)}
-.exlist .t{flex:1;min-width:0}.exlist .t b{display:block;font-weight:500}
-.thumb{width:46px;height:46px;border-radius:12px;background:var(--surface2);display:grid;place-items:center;color:var(--lime);flex:none}
-.done-badge{display:inline-flex;gap:6px;align-items:center;color:var(--ok);font-weight:500}
+    @media (min-width: 992px) {
+      body {
+        padding-bottom: 0;
+        display: flex;
+      }
+    }
 
-/* schedule */
-.day{display:grid;grid-template-columns:62px 1fr auto;align-items:center;gap:12px;padding:14px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line)}
-.day.now{border-color:var(--lime)}
-.day .dn{font:700 22px var(--display)}
-.day .st{font-size:13px}
-.tick{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:transparent}
-.tick.on{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
+    /* ==================== LAYOUT & DESKTOP SIDEBAR ==================== */
+    .app-sidebar {
+      display: none;
+    }
 
-/* empty / skeleton / toast */
-.empty{text-align:center;padding:30px 18px;border:1.5px dashed var(--line);border-radius:var(--r-lg);color:var(--muted)}
-.empty h3{color:var(--text);font-size:24px;margin-bottom:6px}
-.skel{border-radius:var(--r-md);height:84px;background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:sk 1.3s infinite}
-@keyframes sk{to{background-position:-200% 0}}
-.toasts{position:fixed;left:0;right:0;bottom:calc(86px + var(--safe-b));display:flex;flex-direction:column;align-items:center;gap:8px;z-index:60;pointer-events:none}
-@media(min-width:900px){.toasts{bottom:28px}}
-.toast{pointer-events:auto;background:#222f29;border:1px solid var(--line);padding:12px 16px;border-radius:14px;max-width:min(92vw,420px);box-shadow:0 10px 30px rgba(0,0,0,.4);animation:tin .22s ease-out}
-.toast.ok{border-color:rgba(95,227,161,.5)}.toast.err{border-color:rgba(255,107,94,.6)}
-@keyframes tin{from{transform:translateY(10px);opacity:0}}
+    @media (min-width: 992px) {
+      .app-sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 270px;
+        background-color: var(--bg-surface);
+        border-right: 1px solid var(--border-subtle);
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        padding: 28px 20px;
+        flex-shrink: 0;
+      }
 
-/* modal */
-.modal{position:fixed;inset:0;background:rgba(5,9,7,.72);display:flex;align-items:flex-end;justify-content:center;z-index:50;animation:fin .18s}
-.sheet{background:var(--bg2);border:1px solid var(--line);border-radius:26px 26px 0 0;width:100%;max-width:640px;max-height:92vh;overflow:auto;padding:20px 18px calc(22px + var(--safe-b));animation:sup .22s ease-out}
-@media(min-width:700px){.modal{align-items:center}.sheet{border-radius:26px}}
-@keyframes fin{from{opacity:0}}@keyframes sup{from{transform:translateY(24px)}}
-.sheet h3{font-size:30px;margin-bottom:12px}
+      .app-main {
+        flex: 1;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 36px;
+      }
+    }
 
-/* video */
-.vid{position:relative;aspect-ratio:16/9;background:#000;border-radius:var(--r-md);overflow:hidden;display:grid;place-items:center}
-.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vid .poster{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);text-align:center;padding:12px}
-.vid button.play{background:var(--lime);color:var(--lime-ink);border:0;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;cursor:pointer}
-.anim{width:90px;height:90px;color:var(--lime)}
-.anim .mv{animation:bob 1.2s ease-in-out infinite;transform-origin:center}
-@keyframes bob{50%{transform:translateY(8px)}}
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
 
-/* session */
-.session{position:fixed;inset:0;background:var(--bg);z-index:40;overflow:auto;padding:calc(12px + var(--safe-t)) 16px calc(18px + var(--safe-b));display:flex;flex-direction:column;gap:12px}
-.session .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.bar{height:8px;background:var(--surface2);border-radius:5px;overflow:hidden}.bar i{display:block;height:100%;background:var(--lime);width:0;transition:width .3s}
-.phase{font:700 22px var(--display);letter-spacing:.6px;padding:4px 14px;border-radius:99px;background:var(--surface2);display:inline-block}
-.phase.work{background:var(--lime);color:var(--lime-ink)}.phase.rest{background:#2e4a6b}.phase.prepare{background:#5a4a1f;color:#ffe7a8}
-.ring{position:relative;width:min(70vw,300px);aspect-ratio:1;margin:4px auto}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring .bg{stroke:var(--surface2)}.ring .fg{stroke:var(--lime);stroke-linecap:round}
-.ring .big{position:absolute;inset:0;display:grid;place-items:center;font:800 min(26vw,118px)/1 var(--display);font-variant-numeric:tabular-nums}
-.session.rest .ring .fg{stroke:#6fb0ff}
-.ctrl{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.ctrl .btn{flex-direction:column;gap:2px;font-size:12px;min-height:58px;padding:8px 4px}
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+    .brand-badge {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #0B0F19;
+      font-weight: 900;
+      font-size: 1.1rem;
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-neon);
+      letter-spacing: 0.5px;
+    }
 
-/* nutrition */
-.preview{width:100%;max-height:340px;object-fit:cover;border-radius:var(--r-md);display:block}
-.macro{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
-.macro div{background:var(--bg2);border-radius:12px;padding:10px 4px}
-.macro b{display:block;font:700 24px var(--display)}.macro span{font-size:11.5px;color:var(--muted)}
-.meal{padding:14px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line)}
-.fooditem{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;border:1px solid var(--line);border-radius:14px;margin-top:10px}
-.fooditem .full{grid-column:1/-1}
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      flex-direction: column;
+    }
 
-/* charts */
-.chart{width:100%;height:auto;display:block}
-.chart text{fill:var(--muted);font-size:11px;font-family:var(--body)}
-.hist{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
-.seg{display:flex;background:var(--bg2);border-radius:12px;padding:4px;gap:4px;border:1px solid var(--line)}
-.seg button{flex:1;border:0;background:none;padding:9px;border-radius:9px;color:var(--muted);cursor:pointer}
-.seg button.on{background:var(--lime);color:var(--lime-ink);font-weight:600}
-.gate{max-width:420px;margin:12vh auto 0;padding:0 18px}
-.gate h1{font-size:60px}.gate h1 b{color:var(--lime)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--accent-neon-bright);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-item-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 14px 16px;
+      color: var(--text-secondary);
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .sidebar-item-btn:hover {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .sidebar-item-btn.active {
+      background-color: var(--accent-neon-glow);
+      color: var(--accent-neon-bright);
+      border-left: 3px solid var(--accent-neon);
+    }
+
+    .sidebar-item-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ==================== BOTTOM NAV (MOBILE) ==================== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background-color: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 8px env(safe-area-inset-bottom, 0);
+      z-index: 100;
+    }
+
+    @media (min-width: 992px) {
+      .bottom-nav {
+        display: none;
+      }
+    }
+
+    .nav-tab-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      gap: 4px;
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+    }
+
+    .nav-tab-btn.active {
+      color: var(--accent-neon-bright);
+    }
+
+    .nav-tab-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      transition: transform 0.2s;
+    }
+
+    .nav-tab-btn.active svg {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 0 6px var(--accent-neon));
+    }
+
+    /* ==================== COMMON CONTAINERS & CARDS ==================== */
+    .app-main {
+      padding: 20px 16px;
+    }
+
+    .view-section {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .fit-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    /* ==================== BUTTONS ==================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 13px 22px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-neon {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: #07150E;
+      box-shadow: var(--shadow-neon);
+    }
+
+    .btn-neon:hover {
+      background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-card-hover);
+      border-color: var(--text-secondary);
+    }
+
+    .btn-danger {
+      background-color: rgba(239, 68, 68, 0.15);
+      color: #F87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      background-color: rgba(239, 68, 68, 0.25);
+    }
+
+    .btn-lg {
+      padding: 16px 28px;
+      font-size: 1.05rem;
+      border-radius: var(--radius-lg);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* ==================== 1. TỔNG QUAN (DASHBOARD) ==================== */
+    .welcome-hero {
+      background: linear-gradient(135deg, #132438 0%, #0D1624 100%);
+      border: 1px solid #1E3A5F;
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-hero::after {
+      content: "";
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 140px;
+      height: 140px;
+      background: var(--accent-neon);
+      opacity: 0.12;
+      filter: blur(45px);
+      border-radius: 50%;
+    }
+
+    .welcome-meta {
+      font-size: 0.8rem;
+      color: var(--accent-neon-bright);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .welcome-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .welcome-quote {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+    }
+
+    .stat-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value-group {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .stat-value {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--text-primary);
+    }
+
+    .stat-unit {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .stat-diff {
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .stat-diff.good { color: var(--accent-neon-bright); }
+    .stat-diff.neutral { color: var(--text-secondary); }
+
+    .today-workout-hero {
+      background: linear-gradient(135deg, #18283E 0%, #111A29 100%);
+      border: 1.5px solid var(--accent-neon);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-neon);
+      position: relative;
+    }
+
+    .workout-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge-tag {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--accent-neon-bright);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      text-transform: uppercase;
+    }
+
+    .today-workout-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .today-workout-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+
+    .exercise-mini-preview {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+      scrollbar-width: none;
+    }
+
+    .exercise-mini-preview::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mini-pill {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ==================== 2. LỊCH TẬP (SCHEDULE) ==================== */
+    .week-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .calendar-day-cell {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-day-cell.today {
+      border-color: var(--accent-neon);
+      background-color: rgba(16, 185, 129, 0.1);
+    }
+
+    .calendar-day-cell.active {
+      background-color: var(--accent-neon);
+      color: #07150E;
+    }
+
+    .calendar-day-cell.active .day-label,
+    .calendar-day-cell.active .day-name {
+      color: #07150E;
+      font-weight: 800;
+    }
+
+    .calendar-day-cell.completed {
+      border-color: var(--accent-neon-bright);
+    }
+
+    .day-name {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .day-label {
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .day-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: transparent;
+      margin: 6px auto 0;
+    }
+
+    .calendar-day-cell.completed .day-status-dot {
+      background-color: var(--accent-neon-bright);
+    }
+
+    .exercise-list-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .exercise-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .exercise-item-row:hover {
+      border-color: var(--accent-neon);
+      background-color: var(--bg-card-hover);
+    }
+
+    .exercise-item-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .exercise-seq {
+      width: 32px;
+      height: 32px;
+      background-color: var(--bg-card);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--accent-neon-bright);
+      flex-shrink: 0;
+    }
+
+    .exercise-names-wrap h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .exercise-names-wrap p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .exercise-meta-tag {
+      font-size: 0.75rem;
+      color: var(--accent-neon-bright);
+      font-weight: 700;
+      background: var(--accent-neon-glow);
+      padding: 4px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ==================== 3. MÀN HÌNH TẬP LUYỆN (WORKOUT PLAYER) ==================== */
+    .player-container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .player-progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background-color: var(--bg-surface);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .player-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .video-frame-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background-color: #000;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .video-frame-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-fallback-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #132438 0%, #0B111A 100%);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .video-fallback-animation {
+      width: 50px;
+      height: 50px;
+      border: 3px dashed var(--accent-neon);
+      border-radius: 50%;
+      animation: spin 8s linear infinite;
+      margin-bottom: 12px;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .timer-display-card {
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+
+    .timer-display-card.active-work {
+      border-color: var(--accent-neon);
+      box-shadow: 0 0 30px var(--accent-neon-glow);
+    }
+
+    .timer-display-card.active-rest {
+      border-color: var(--accent-energy);
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+    }
+
+    .timer-state-pill {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .timer-state-pill.work {
+      background-color: var(--accent-neon-glow);
+      color: var(--accent-neon-bright);
+      border: 1px solid var(--accent-neon);
+    }
+
+    .timer-state-pill.rest {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: #FBBF24;
+      border: 1px solid #F59E0B;
+    }
+
+    .timer-state-pill.prep {
+      background-color: rgba(59, 130, 246, 0.15);
+      color: #60A5FA;
+      border: 1px solid #3B82F6;
+    }
+
+    .timer-countdown-digits {
+      font-size: 4.8rem;
+      font-weight: 900;
+      letter-spacing: -2px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .timer-exercise-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .timer-exercise-sub {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .timer-cues {
+      font-size: 0.82rem;
+      color: #D1D5DB;
+      background-color: var(--bg-surface);
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      display: inline-block;
+      max-width: 90%;
+    }
+
+    .player-controls-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .sound-toggle-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    /* ==================== 4. DINH DƯỠNG & CHỤP ẢNH AI ==================== */
+    .nutrition-summary-card {
+      background: linear-gradient(135deg, #182234 0%, #111827 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .macros-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    .macro-col h5 {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .macro-col p {
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .upload-zone-box {
+      border: 2px dashed var(--border-subtle);
+      background-color: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .upload-zone-box:hover {
+      border-color: var(--accent-neon);
+      background-color: rgba(16, 185, 129, 0.04);
+    }
+
+    .preview-image-wrap {
+      width: 100%;
+      max-height: 280px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 16px;
+      display: none;
+      position: relative;
+    }
+
+    .preview-image-wrap img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ai-analysis-result-card {
+      display: none;
+      background-color: var(--bg-card);
+      border: 1px solid var(--accent-neon);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-neon);
+    }
+
+    .food-edit-item-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .food-input {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      font-family: inherit;
+    }
+
+    .food-input:focus {
+      border-color: var(--accent-neon);
+      outline: none;
+    }
+
+    .meal-type-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .meal-type-tab-btn {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .meal-type-tab-btn.active {
+      background-color: var(--accent-neon);
+      color: #07150E;
+      border-color: var(--accent-neon);
+    }
+
+    /* ==================== 5. TIẾN TRÌNH & BIỂU ĐỒ ==================== */
+    .chart-container-box {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .chart-svg-wrap {
+      width: 100%;
+      height: 220px;
+      margin-top: 16px;
+    }
+
+    .weight-log-form-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    /* ==================== MODAL & TOAST ==================== */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+      animation: modalFade 0.2s ease-out;
+    }
+
+    @keyframes modalFade {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-box {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      max-width: 520px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 90%;
+      max-width: 400px;
+      pointer-events: none;
+    }
+
+    .toast-message {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-message.success { border-color: var(--accent-neon); color: var(--accent-neon-bright); }
+    .toast-message.error { border-color: var(--accent-danger); color: #F87171; }
+    .toast-message.info { border-color: var(--accent-blue); color: #60A5FA; }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==================== SKELETON & EMPTY STATES ==================== */
+    .skeleton-box {
+      background: linear-gradient(90deg, #182234 25%, #223048 50%, #182234 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-md);
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .empty-state-box {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-box svg {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 12px;
+      stroke: var(--text-muted);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></symbol>
-    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></symbol>
-    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
-    <symbol id="i-food" viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 002 2v8M11 3v8M7 7h4M17 3c-2 2-3 5-3 8h3v10"/></symbol>
-    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M6 16l4-5 4 3 5-8"/></symbol>
-    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
-    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="currentColor"/></symbol>
-    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></symbol>
-    <symbol id="i-skip" viewBox="0 0 24 24"><path d="M5 5l10 7-10 7zM19 5v14"/></symbol>
-    <symbol id="i-redo" viewBox="0 0 24 24"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8M3 3v5h5"/></symbol>
-    <symbol id="i-cam" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
-    <symbol id="i-vol" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM16.5 8.5a5 5 0 010 7"/></symbol>
-    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zM17 9l4 6M21 9l-4 6"/></symbol>
-    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
-    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></symbol>
-    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
-    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
-  </defs>
-</svg>
 
-<div id="gate" class="gate" hidden></div>
+  <!-- ==================== DESKTOP SIDEBAR ==================== -->
+  <aside class="app-sidebar">
+    <a href="#" class="brand-logo" onclick="appNav.goTo('dashboard'); return false;">
+      <span class="brand-badge">FIT30</span>
+      <div class="brand-title">
+        <span>FIT30 APP</span>
+        <span class="brand-sub">Better You</span>
+      </div>
+    </a>
 
-<div class="app" id="app" hidden>
-  <aside class="side" aria-label="Điều hướng chính">
-    <div class="brand">FIT<b>30</b></div>
-    <button class="nv" data-nav="dashboard"><svg class="i"><use href="#i-home"/></svg>Tổng quan</button>
-    <button class="nv" data-nav="plan"><svg class="i"><use href="#i-cal"/></svg>Lịch tập</button>
-    <button class="nv" data-nav="train"><svg class="i"><use href="#i-bolt"/></svg>Tập luyện</button>
-    <button class="nv" data-nav="food"><svg class="i"><use href="#i-food"/></svg>Dinh dưỡng</button>
-    <button class="nv" data-nav="progress"><svg class="i"><use href="#i-chart"/></svg>Tiến trình</button>
-    <div style="flex:1"></div>
-    <button class="nv" id="btnSettingsSide"><svg class="i"><use href="#i-gear"/></svg>Mục tiêu &amp; cài đặt</button>
+    <ul class="sidebar-menu">
+      <li>
+        <button class="sidebar-item-btn active" data-tab="dashboard" onclick="appNav.goTo('dashboard')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Tổng quan</span>
+        </button>
+      </li>
+      <li>
+        <button class="sidebar-item-btn" data-tab="schedule" onclick="appNav.goTo('schedule')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Lịch tập tuần</span>
+        </button>
+      </li>
+      <li>
+        <button class="sidebar-item-btn" data-tab="workout" onclick="appNav.goTo('workout')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Tập luyện</span>
+        </button>
+      </li>
+      <li>
+        <button class="sidebar-item-btn" data-tab="nutrition" onclick="appNav.goTo('nutrition')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V18a1 1 0 0 1-2 0v-1.07A6 6 0 0 1 7.07 13H8a1 1 0 0 1 0-2h-.93A6 6 0 0 1 11 7.07V6a1 1 0 0 1 2 0v1.07A6 6 0 0 1 16.93 11H16a1 1 0 0 1 0 2h.93A6 6 0 0 1 13 16.93z"/></svg>
+          <span>Dinh dưỡng AI</span>
+        </button>
+      </li>
+      <li>
+        <button class="sidebar-item-btn" data-tab="progress" onclick="appNav.goTo('progress')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>Tiến trình đo</span>
+        </button>
+      </li>
+    </ul>
+
+    <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+      <button class="btn btn-secondary btn-block" style="font-size: 0.85rem;" onclick="appUI.openSettingsModal()">
+        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Cài đặt mục tiêu</span>
+      </button>
+    </div>
   </aside>
-  <main id="view" tabindex="-1" aria-live="polite"></main>
-</div>
 
-<nav class="nav" id="bottomNav" aria-label="Điều hướng chính" hidden>
-  <button data-nav="dashboard"><svg class="i"><use href="#i-home"/></svg>Tổng quan</button>
-  <button data-nav="plan"><svg class="i"><use href="#i-cal"/></svg>Lịch tập</button>
-  <button data-nav="train"><svg class="i"><use href="#i-bolt"/></svg>Tập luyện</button>
-  <button data-nav="food"><svg class="i"><use href="#i-food"/></svg>Dinh dưỡng</button>
-  <button data-nav="progress"><svg class="i"><use href="#i-chart"/></svg>Tiến trình</button>
-</nav>
+  <!-- ==================== MAIN VIEW CONTAINER ==================== -->
+  <main class="app-main">
+    <div id="toastContainer" class="toast-container"></div>
 
-<div id="sessionRoot"></div>
-<div id="modalRoot"></div>
-<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
-<iframe name="fit30_frame" id="fit30_frame" title="api" style="display:none" tabindex="-1"></iframe>
+    <!-- 1. TỔNG QUAN (DASHBOARD) -->
+    <section id="view-dashboard" class="view-section active">
+      <div class="welcome-hero">
+        <div class="welcome-meta" id="dashGreetingDate">HÔM NAY</div>
+        <h2 class="welcome-title" id="dashGreetingText">Chào bạn, sẵn sàng bứt phá hôm nay!</h2>
+        <p class="welcome-quote" id="dashMotivationQuote">"30 phút mỗi ngày tương đương chỉ 2% thời gian trong ngày của bạn. Đừng trì hoãn sự chuyển đổi của mình."</p>
+      </div>
 
-<script src="app.js"></script>
+      <!-- Thẻ thống kê nhanh -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Cân nặng gần nhất</span>
+          <div class="stat-value-group">
+            <span class="stat-value" id="dashCurrentWeight">--</span>
+            <span class="stat-unit">kg</span>
+          </div>
+          <span class="stat-diff" id="dashWeightDiff">Chưa có số liệu</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Vòng bụng</span>
+          <div class="stat-value-group">
+            <span class="stat-value" id="dashCurrentWaist">--</span>
+            <span class="stat-unit">cm</span>
+          </div>
+          <span class="stat-diff neutral" id="dashWaistTarget">Mục tiêu: 80 cm</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Tập trong tuần</span>
+          <div class="stat-value-group">
+            <span class="stat-value" id="dashWorkoutsWeek">0</span>
+            <span class="stat-unit">/ 4 buổi</span>
+          </div>
+          <span class="stat-diff good" id="dashWorkoutMinutes">0 phút đã tập</span>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Calo nạp hôm nay</span>
+          <div class="stat-value-group">
+            <span class="stat-value" id="dashTodayCalories">0</span>
+            <span class="stat-unit">kcal</span>
+          </div>
+          <span class="stat-diff neutral" id="dashCalorieGoal">Mục tiêu: 2000</span>
+        </div>
+      </div>
+
+      <!-- Card buổi tập hôm nay -->
+      <div class="today-workout-hero">
+        <div class="workout-badge-row">
+          <span class="badge-tag">HÔM NAY • 30 PHÚT</span>
+          <span class="badge-tag" style="border-color:#3B82F6; color:#60A5FA; background:rgba(59,130,246,0.15);">KHÔNG DỤNG CỤ</span>
+          <span id="dashWorkoutStatusBadge" class="badge-tag" style="display:none; border-color:#10B981; background:#10B981; color:#0B0F19;">ĐÃ HOÀN THÀNH</span>
+        </div>
+        <h3 class="today-workout-title" id="dashTodayWorkoutTitle">Cardio & Sức Bền Kháng Lực Toàn Thân</h3>
+        <p class="today-workout-desc" id="dashTodayWorkoutDesc">Chương trình 30 phút tiêu chuẩn: 5 phút làm nóng khớp, 6 bài tập chính kháng mỡ và 5 phút hạ nhiệt phục hồi.</p>
+        
+        <div class="exercise-mini-preview" id="dashMiniExerciseList">
+          <!-- Mini preview items injected by JS -->
+        </div>
+
+        <button id="dashStartWorkoutBtn" class="btn btn-neon btn-lg btn-block" onclick="workoutEngine.startTodaySession()">
+          <svg style="width: 22px; height: 22px;" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>BẮT ĐẦU BUỔI TẬP NGAY</span>
+        </button>
+      </div>
+
+      <!-- Mục tiêu & Lời khuyên -->
+      <div class="fit-card">
+        <h4 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 8px;">Mẹo giảm mỡ tại nhà cho người bắt đầu</h4>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+          Nếu bạn thừa cân, hãy bắt đầu ở cường độ vừa sức bằng các biến thể ít áp lực lên khớp gối (như Step Jack thay vì Jumping Jack, Low March thay vì High Knees). Tập trung vào sự đều đặn 4 buổi mỗi tuần thay vì tập kiệt sức một ngày rồi bỏ cuộc cả tuần.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. LỊCH TẬP (SCHEDULE) -->
+    <section id="view-schedule" class="view-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Lịch Tập Trong Tuần</h2>
+          <p class="section-subtitle">Chương trình khoa học 7 ngày tối ưu chuyển hóa năng lượng</p>
+        </div>
+      </div>
+
+      <!-- 7 Ngày trong tuần -->
+      <div class="week-calendar-grid" id="scheduleWeekGrid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Chi tiết buổi tập được chọn -->
+      <div class="fit-card" id="scheduleDayDetailCard">
+        <div class="workout-badge-row">
+          <span class="badge-tag" id="schedSelectedDayTag">THỨ HAI</span>
+          <span class="badge-tag" id="schedSelectedTypeTag">BUỔI TẬP CHÍNH</span>
+        </div>
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 6px;" id="schedSelectedTitle">Cardio & Giảm Mỡ Cơ Bản</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 20px;" id="schedSelectedDesc">Thời lượng 30 phút • 4 hiệp chuyển động • Tự đếm giờ</p>
+
+        <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent-neon-bright);">
+          Danh sách động tác chi tiết
+        </h4>
+        <div class="exercise-list-card" id="schedExerciseList">
+          <!-- Rendered by JS -->
+        </div>
+
+        <div style="margin-top: 24px;">
+          <button class="btn btn-neon btn-lg btn-block" onclick="workoutEngine.startSelectedScheduleSession()">
+            BẮT ĐẦU BUỔI TẬP NÀY
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TẬP LUYỆN (WORKOUT PLAYER & TIMER) -->
+    <section id="view-workout" class="view-section">
+      <div class="player-container">
+        <!-- Header thông tin bài tập -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">FIT30 WORKOUT ENGINE</span>
+            <h3 style="font-size: 1.15rem; font-weight: 800;" id="playerWorkoutName">30 Phút Toàn Thân</h3>
+          </div>
+          <button class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem;" onclick="workoutEngine.confirmExit()">
+            Thoát
+          </button>
+        </div>
+
+        <!-- Thanh tiến độ -->
+        <div class="player-progress-bar-bg">
+          <div class="player-progress-fill" id="playerProgressFill"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 16px;">
+          <span id="playerExerciseIndexLabel">Động tác 1/8</span>
+          <span id="playerTotalTimeRemainingLabel">Còn lại: 30:00</span>
+        </div>
+
+        <!-- Video Player với fallback chuẩn -->
+        <div class="video-frame-container" id="playerVideoContainer">
+          <iframe id="playerIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="video-fallback-card" id="playerVideoFallback" style="display: none;">
+            <div class="video-fallback-animation"></div>
+            <h4 id="fallbackExerciseName" style="font-weight: 800; font-size: 1.1rem; margin-bottom: 6px;">Tập trung kỹ thuật</h4>
+            <p id="fallbackExerciseCue" style="font-size: 0.82rem; color: var(--text-secondary); max-width: 380px;">Giữ lưng thẳng, siết chặt cơ bụng và thở đều theo nhịp động tác.</p>
+            <a id="fallbackExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="margin-top: 14px; padding: 6px 12px; font-size: 0.75rem;">Mở video trên YouTube</a>
+          </div>
+        </div>
+
+        <!-- Thẻ đồng hồ đếm ngược -->
+        <div class="timer-display-card" id="playerTimerCard">
+          <button class="sound-toggle-btn" id="playerSoundBtn" title="Bật/Tắt âm thanh" onclick="workoutEngine.toggleSound()">
+            <svg id="soundOnIcon" style="width: 22px; height: 22px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <svg id="soundOffIcon" style="width: 22px; height: 22px; display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          </button>
+
+          <span class="timer-state-pill work" id="playerStatePill">CHUẨN BỊ</span>
+          <div class="timer-countdown-digits" id="playerTimerDigits">00:10</div>
+          <h4 class="timer-exercise-name" id="playerCurrentExName">Khởi động: Đi bộ tại chỗ</h4>
+          <p class="timer-exercise-sub" id="playerCurrentExSub">March in Place • Tiếp đất nhẹ nhàng</p>
+          <div class="timer-cues" id="playerCurrentCues">Hướng dẫn: Đứng thẳng, nâng nhẹ gối, xoay nhẹ cổ chân và vai để bôi trơn khớp.</div>
+        </div>
+
+        <!-- Nút điều khiển -->
+        <div class="player-controls-row">
+          <button class="btn btn-secondary" onclick="workoutEngine.restartCurrentExercise()" title="Tập lại bài này">
+            <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          </button>
+
+          <button id="playerMainPlayBtn" class="btn btn-neon btn-lg" onclick="workoutEngine.togglePlayPause()">
+            <svg id="playIcon" style="width: 24px; height: 24px;" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg id="pauseIcon" style="width: 24px; height: 24px; display: none;" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            <span id="playPauseText">BẮT ĐẦU</span>
+          </button>
+
+          <button class="btn btn-secondary" onclick="workoutEngine.skipExercise()" title="Bỏ qua sang bài tiếp theo">
+            <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. DINH DƯỠNG & CHỤP ẢNH MÓN ĂN AI -->
+    <section id="view-nutrition" class="view-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Dinh Dưỡng & AI Nhận Diện</h2>
+          <p class="section-subtitle">Chụp ảnh món ăn để Gemini phân tích calo và đạm tự động</p>
+        </div>
+      </div>
+
+      <!-- Thẻ tóm tắt calo ngày -->
+      <div class="nutrition-summary-card">
+        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+          <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">TỔNG NĂNG LƯỢNG HÔM NAY</span>
+          <span style="font-size: 0.85rem; color: var(--accent-neon-bright); font-weight: 700;" id="nutriDateLabel">Hôm nay</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 6px; margin: 8px 0;">
+          <span style="font-size: 2.2rem; font-weight: 900; color: var(--text-primary);" id="nutriTotalCalories">0</span>
+          <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 600;">/ <span id="nutriGoalTarget">2000</span> kcal</span>
+        </div>
+
+        <div class="macros-row">
+          <div class="macro-col">
+            <h5>Chất Đạm (Protein)</h5>
+            <p><span id="nutriTotalProtein" style="color: #60A5FA;">0</span> <span style="font-size: 0.75rem; color: var(--text-muted);">g</span></p>
+          </div>
+          <div class="macro-col">
+            <h5>Tinh Bột (Carbs)</h5>
+            <p><span id="nutriTotalCarbs" style="color: #FBBF24;">0</span> <span style="font-size: 0.75rem; color: var(--text-muted);">g</span></p>
+          </div>
+          <div class="macro-col">
+            <h5>Chất Béo (Fat)</h5>
+            <p><span id="nutriTotalFat" style="color: #F87171;">0</span> <span style="font-size: 0.75rem; color: var(--text-muted);">g</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vùng tải / Chụp ảnh -->
+      <div class="fit-card">
+        <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 14px;">Chụp ảnh hoặc tải ảnh bữa ăn</h4>
+        
+        <input type="file" id="foodCameraInput" accept="image/*" capture="environment" style="display: none;" onchange="nutritionAI.handleFileSelect(event)">
+        <input type="file" id="foodGalleryInput" accept="image/*" style="display: none;" onchange="nutritionAI.handleFileSelect(event)">
+
+        <div class="upload-zone-box" onclick="nutritionAI.triggerPhotoChoice()">
+          <svg style="width: 44px; height: 44px; stroke: var(--accent-neon); margin: 0 auto 10px;" viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <h5 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 4px;">Chạm để Chụp ảnh hoặc Chọn từ thư viện</h5>
+          <p style="font-size: 0.78rem; color: var(--text-secondary);">Hỗ trợ JPG, PNG, WEBP. Ảnh tự động nén tối ưu trước khi gửi.</p>
+        </div>
+
+        <!-- Preview Ảnh Đã Chọn -->
+        <div class="preview-image-wrap" id="foodPreviewWrap">
+          <img id="foodPreviewImg" src="" alt="Ảnh món ăn">
+        </div>
+
+        <div id="aiActionButtons" style="display: none; gap: 10px; margin-bottom: 16px;">
+          <button class="btn btn-secondary" style="flex: 1;" onclick="nutritionAI.triggerPhotoChoice()">Đổi ảnh khác</button>
+          <button id="btnAnalyzeFood" class="btn btn-neon" style="flex: 2;" onclick="nutritionAI.analyzePhotoWithGemini()">
+            <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            <span>PHÂN TÍCH CALO BẰNG AI</span>
+          </button>
+        </div>
+
+        <!-- Kết Quả Phân Tích Của AI Cho Phép Chỉnh Sửa -->
+        <div class="ai-analysis-result-card" id="aiResultCard">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h4 style="font-size: 1rem; font-weight: 800; color: var(--accent-neon-bright);">Kết quả nhận diện món ăn</h4>
+            <span id="aiConfidenceBadge" class="badge-tag">AI ĐỘ CHÍNH XÁC: VỪA</span>
+          </div>
+
+          <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 14px;" id="aiUncertaintyNote">
+            Ước tính từ hình ảnh. Bạn có thể bấm để chỉnh sửa tên món, khối lượng hoặc calo trước khi lưu:
+          </p>
+
+          <div id="editableFoodsContainer">
+            <!-- Injected by JS -->
+          </div>
+
+          <div style="margin: 16px 0 12px;">
+            <label class="form-label">Chọn bữa ăn để lưu vào nhật ký:</label>
+            <div class="meal-type-tabs" style="margin-top: 6px;">
+              <button class="meal-type-tab-btn active" data-meal="Bữa Sáng" onclick="nutritionAI.setMealType('Bữa Sáng')">Bữa Sáng</button>
+              <button class="meal-type-tab-btn" data-meal="Bữa Trưa" onclick="nutritionAI.setMealType('Bữa Trưa')">Bữa Trưa</button>
+              <button class="meal-type-tab-btn" data-meal="Bữa Tối" onclick="nutritionAI.setMealType('Bữa Tối')">Bữa Tối</button>
+              <button class="meal-type-tab-btn" data-meal="Bữa Phụ" onclick="nutritionAI.setMealType('Bữa Phụ')">Bữa Phụ</button>
+            </div>
+          </div>
+
+          <button id="btnSaveFoodLog" class="btn btn-neon btn-block" onclick="nutritionAI.saveCurrentMealToSheet()">
+            LƯU VÀO NHẬT KÝ DINH DƯỠNG
+          </button>
+        </div>
+      </div>
+
+      <!-- Danh Sách Nhật Ký Bữa Ăn Hôm Nay -->
+      <div class="fit-card">
+        <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 14px;">Nhật ký món ăn đã ghi nhận hôm nay</h4>
+        <div id="todayFoodLogsList">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TIẾN TRÌNH (PROGRESS & MEASUREMENTS) -->
+    <section id="view-progress" class="view-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Theo Dõi Cân Nặng & Vòng Bụng</h2>
+          <p class="section-subtitle">Ghi nhận tiến trình giảm mỡ để duy trì thói quen bền vững</p>
+        </div>
+      </div>
+
+      <!-- Form nhập số đo -->
+      <div class="weight-log-form-card">
+        <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 14px;">Ghi nhận số đo mới</h4>
+        <form id="weightLogForm" onsubmit="progressTracker.handleFormSubmit(event)">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="inputWeight">Cân nặng (kg) *</label>
+              <input type="number" step="0.1" min="30" max="250" id="inputWeight" class="food-input" placeholder="VD: 74.5" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inputWaist">Vòng bụng (cm)</label>
+              <input type="number" step="0.5" min="40" max="180" id="inputWaist" class="food-input" placeholder="VD: 86.0">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="form-label" for="inputLogDate">Ngày ghi nhận</label>
+            <input type="date" id="inputLogDate" class="food-input" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="form-label" for="inputWeightNotes">Ghi chú (tùy chọn)</label>
+            <input type="text" id="inputWeightNotes" class="food-input" placeholder="VD: Cân buổi sáng lúc bụng đói">
+          </div>
+
+          <button type="submit" id="btnSaveWeight" class="btn btn-neon btn-block">
+            LƯU SỐ ĐO
+          </button>
+        </form>
+      </div>
+
+      <!-- Biểu đồ biến thiên cân nặng -->
+      <div class="chart-container-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h4 style="font-size: 1rem; font-weight: 800;">Biểu đồ thay đổi cân nặng (kg)</h4>
+          <span style="font-size: 0.75rem; color: var(--accent-neon-bright); font-weight: 700;" id="chartWeightTrend">Đang phân tích</span>
+        </div>
+        <div class="chart-svg-wrap" id="weightChartContainer">
+          <!-- Native SVG Line Chart rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Bảng lịch sử các lần đo -->
+      <div class="fit-card">
+        <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 14px;">Lịch sử đo</h4>
+        <div id="weightHistoryList">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== BOTTOM NAV (MOBILE) ==================== -->
+  <nav class="bottom-nav">
+    <button class="nav-tab-btn active" data-tab="dashboard" onclick="appNav.goTo('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Tổng quan</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="schedule" onclick="appNav.goTo('schedule')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Lịch tập</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="workout" onclick="appNav.goTo('workout')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span>Tập luyện</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="nutrition" onclick="appNav.goTo('nutrition')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V18a1 1 0 0 1-2 0v-1.07A6 6 0 0 1 7.07 13H8a1 1 0 0 1 0-2h-.93A6 6 0 0 1 11 7.07V6a1 1 0 0 1 2 0v1.07A6 6 0 0 1 16.93 11H16a1 1 0 0 1 0 2h.93A6 6 0 0 1 13 16.93z"/></svg>
+      <span>Dinh dưỡng</span>
+    </button>
+    <button class="nav-tab-btn" data-tab="progress" onclick="appNav.goTo('progress')">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span>Tiến trình</span>
+    </button>
+  </nav>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Modal Chi Tiết Động Tác -->
+  <div id="exerciseModal" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="appUI.closeModal('exerciseModal')">&times;</button>
+      <div id="exerciseModalContent">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Cài Đặt Mục Tiêu -->
+  <div id="settingsModal" class="modal-backdrop">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="appUI.closeModal('settingsModal')">&times;</button>
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">Cài Đặt Mục Tiêu Cá Nhân</h3>
+      <form id="settingsForm" onsubmit="appUI.saveSettings(event)">
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Mục tiêu cân nặng (kg)</label>
+          <input type="number" step="0.5" id="settingTargetWeight" class="food-input" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Mục tiêu vòng bụng (cm)</label>
+          <input type="number" step="1" id="settingTargetWaist" class="food-input">
+        </div>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label">Mục tiêu buổi tập mỗi tuần</label>
+          <input type="number" min="1" max="7" id="settingTargetWorkouts" class="food-input" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label">Mục tiêu calo nạp mỗi ngày (kcal)</label>
+          <input type="number" step="50" id="settingTargetCalories" class="food-input" required>
+        </div>
+        <button type="submit" id="btnSaveSettings" class="btn btn-neon btn-block">LƯU CÀI ĐẶT</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Hoàn Thành Buổi Tập -->
+  <div id="workoutSummaryModal" class="modal-backdrop">
+    <div class="modal-box" style="text-align: center;">
+      <div style="width: 64px; height: 64px; background: var(--accent-neon-glow); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 2px solid var(--accent-neon);">
+        <svg style="width: 32px; height: 32px; stroke: var(--accent-neon-bright);" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 style="font-size: 1.4rem; font-weight: 900; margin-bottom: 6px;">XUẤT SẮC! BUỔI TẬP HOÀN TẤT</h3>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 20px;">Bạn vừa hoàn thành 30 phút rèn luyện bản thân vì một cơ thể khỏe mạnh hơn.</p>
+      
+      <div class="stats-grid" style="margin-bottom: 20px;">
+        <div class="stat-card">
+          <span class="stat-label">Thời gian</span>
+          <span class="stat-value" id="summaryDurationVal">30:00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Động tác</span>
+          <span class="stat-value" id="summaryExercisesVal">8/8</span>
+        </div>
+      </div>
+
+      <div class="form-group" style="text-align: left; margin-bottom: 20px;">
+        <label class="form-label">Cảm nhận buổi tập (tùy chọn):</label>
+        <input type="text" id="summaryNotesInput" class="food-input" placeholder="VD: Khá mệt nhưng thấy cơ thể rất nhẹ nhõm!">
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button id="btnSaveWorkoutResult" class="btn btn-neon" style="flex: 2;" onclick="workoutEngine.saveCompletedWorkout()">LƯU KẾT QUẢ</button>
+        <button class="btn btn-secondary" style="flex: 1;" onclick="appUI.closeModal('workoutSummaryModal'); appNav.goTo('dashboard');">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script src="app.js"></script>
 </body>
 </html>
