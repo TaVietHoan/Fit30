@@ -9,7 +9,7 @@
 
 // ==================== 1. CẤU HÌNH KẾT NỐI BACKEND ====================
 // Thay thế URL dưới đây bằng URL Web App Apps Script của bạn sau khi deploy:
-var GAS_API_URL = "https://script.google.com/macros/s/AKfycbyVn7o1d8U1v_zK9mK_Fit30_Placeholder/exec";
+var GAS_API_URL = "https://script.google.com/macros/s/AKfycbyo1AQkT8mHvGljs6ZhCh4lTcRUEiu2ID0w8qVZoI-B80ECeXo48oE8daPR0Uz2GQ8vWA/exec";
 
 // ==================== 2. KHO BÀI TẬP & VIDEO ĐÃ NGHIÊN CỨU ====================
 // Mỗi bài tập đều có YouTube ID video hướng dẫn thực tế, tên song ngữ, nhóm cơ và lưu ý an toàn.
